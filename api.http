@@ -11,3 +11,19 @@ Content-Type: application/json
     },
     "Text": "LinkedIn https://www.linkedin.com/in/wallissonmarinho/"
 }
+
+###
+GET http://localhost:3000/mail-list
+
+
+###
+POST http://localhost:3000/mail-list
+Content-Type: application/json
+
+{
+    "emails": [
+        "wallissonsmarinho@gmail.com",
+        "wallissonmarinho@hotmail.com",
+        "teste@mail.com"
+    ]
+}

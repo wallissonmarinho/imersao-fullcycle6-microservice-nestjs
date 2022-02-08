@@ -16,8 +16,13 @@ export class TweetsService {
     return this.tweetModal.create(createTweetDto);
   }
 
-  findAll() {
-    return this.tweetModal.find().exec();
+  findAll(
+    { offset, limit }: { offset: number; limit: number } = {
+      offset: 0,
+      limit: 50,
+    },
+  ) {
+    return this.tweetModal.find().skip(offset).limit(limit).exec();
   }
 
   findOne(id: number) {
