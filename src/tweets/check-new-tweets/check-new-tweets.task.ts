@@ -2,6 +2,8 @@ import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { TweetsService } from '../tweets.service';
 import { Cache } from 'cache-manager';
+import { Queue } from 'bull';
+import { InjectQueue } from '@nestjs/bull';
 
 @Injectable()
 export class CheckNewTweetsTask {
@@ -9,9 +11,10 @@ export class CheckNewTweetsTask {
 
   constructor(
     private tweetService: TweetsService,
-
     @Inject(CACHE_MANAGER)
     private cache: Cache,
+    @InjectQueue('emails')
+    private emailsQueue: Queue,
   ) {}
 
   @Cron(CronExpression.EVERY_5_SECONDS)
@@ -35,6 +38,8 @@ export class CheckNewTweetsTask {
       await this.cache.set('tweet-offset', offset + this.limit, {
         ttl: 1 * 60 * 10,
       });
+
+      this.emailsQueue.add({});
     }
   }
 }

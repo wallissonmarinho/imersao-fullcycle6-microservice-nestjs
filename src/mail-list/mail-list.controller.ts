@@ -12,9 +12,9 @@ export class MailListController {
   }
   @Get()
   async findOne(@Res() res) {
-    const mail = await this.mailListService.findOne();
-    return !mail
+    const mailLIst = await this.mailListService.findOne();
+    return !mailLIst
       ? res.status(HttpStatus.NO_CONTENT).json(null)
-      : res.json(mail);
+      : res.json(mailLIst);
   }
 }
